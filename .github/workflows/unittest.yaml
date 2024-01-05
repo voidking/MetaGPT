@@ -6,8 +6,6 @@ on:
       - 'main'
       - 'dev'
       - '*-release'
-    types:
-      - ready_for_review
   push: 
     branches: 
       - 'main'
