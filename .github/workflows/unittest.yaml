@@ -1,11 +1,17 @@
 name: Python application test
 
 on:
-  workflow_dispatch:
+  pull_request:
+    branches:
+      - '**'
+  push: 
+    branches: 
+      - '**'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: unittest
     strategy:
       matrix:
         # python-version: ['3.9', '3.10', '3.11']
