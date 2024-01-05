@@ -6,13 +6,13 @@ on:
       - 'main'
       - 'dev'
       - '*-release'
+    types:
+      - closed
   push: 
     branches: 
       - 'main'
       - 'dev'
       - '*-release'
-permissions:
-  contents: write
 
 jobs:
   build:
