@@ -2,13 +2,6 @@ name: Python application test
 
 on:
   pull_request:
-    branches:
-      - 'main'
-      - 'dev'
-      - '*-release'
-    types:
-      - open
-      - reopen
   push: 
     branches: 
       - 'main'
@@ -59,4 +52,5 @@ jobs:
           ./tests/data/rsp_cache_new.json
         retention-days: 3
       if: ${{ always() }}
+
       
