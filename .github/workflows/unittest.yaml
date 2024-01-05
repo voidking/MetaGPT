@@ -50,5 +50,3 @@ jobs:
           ./tests/data/rsp_cache_new.json
         retention-days: 3
       if: ${{ always() }}
-
-      
