@@ -2,17 +2,20 @@ name: Python application test
 
 on:
   pull_request:
+    branches:
+      - 'main'
+      - 'dev'
+      - '*-release'
   push: 
     branches: 
       - 'main'
       - 'dev'
       - '*-release'
-permissions:
-  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: unittest
     strategy:
       matrix:
         # python-version: ['3.9', '3.10', '3.11']
@@ -52,5 +55,4 @@ jobs:
           ./tests/data/rsp_cache_new.json
         retention-days: 3
       if: ${{ always() }}
-
       
