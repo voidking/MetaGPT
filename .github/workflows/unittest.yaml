@@ -7,12 +7,15 @@ on:
       - 'dev'
       - '*-release'
     types:
-      - closed
+      - open
+      - reopen
   push: 
     branches: 
       - 'main'
       - 'dev'
       - '*-release'
+permissions:
+  contents: write
 
 jobs:
   build:
