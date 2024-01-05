@@ -3,10 +3,16 @@ name: Python application test
 on:
   pull_request:
     branches:
-      - '**'
+      - 'main'
+      - 'dev'
+      - 'release*'
+    types:
+      - ready_for_review
   push: 
     branches: 
-      - '**'
+      - 'main'
+      - 'dev'
+      - 'release*'
 
 jobs:
   build:
