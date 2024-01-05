@@ -42,6 +42,11 @@ jobs:
     - name: Show failed tests and overall summary
       run: |
         grep -E "FAILED tests|[0-9]+ passed," unittest.txt
+        faild_count=$(grep "FAILD" unittest.txt | wc -l)
+        if [[ "$line_count" -gt 0 ]]; then
+          echo "$faild_count failed lines found! Task failed."
+          exit 1
+        fi
     - name: Upload pytest test results
       uses: actions/upload-artifact@v3
       with:
