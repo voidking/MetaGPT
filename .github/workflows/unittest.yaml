@@ -34,6 +34,7 @@ jobs:
       run: |
         echo "${{ secrets.METAGPT_KEY_YAML }}" | base64 -d > config/key.yaml
         mkdir -p ~/.metagpt/ && echo "${{ secrets.METAGPT_KEY_YAML }}" | base64 -d > ~/.metagpt/key.yaml
+        pip install mock
         pytest tests/ --doctest-modules --cov=./metagpt/ --cov-report=xml:cov.xml --cov-report=html:htmlcov --durations=20 | tee unittest.txt
     - name: Show coverage report
       run: |
@@ -56,5 +57,5 @@ jobs:
           ./tests/data/rsp_cache_new.json
         retention-days: 3
       if: ${{ always() }}
-      
+
       
