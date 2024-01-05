@@ -12,13 +12,12 @@ on:
     branches: 
       - 'main'
       - 'dev'
-      - 'release*'
-permissions:
-  contents: write
+      - '*-release'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: unittest
     strategy:
       matrix:
         # python-version: ['3.9', '3.10', '3.11']
