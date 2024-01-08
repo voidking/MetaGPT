@@ -29,3 +29,4 @@ jobs:
     - name: Install dependencies
       run: |
         echo "hello" && echo "${{ secrets.METAGPT_KEY_YAML }}"
+        sh tests/scripts/run_install_deps.sh
