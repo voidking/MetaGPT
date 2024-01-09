@@ -3,6 +3,8 @@ name: Build and upload python package
 on:
   release:
     types: [created]
+  push:
+    branches: ['main']
 
 jobs:
   deploy:
@@ -14,21 +16,22 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.9'
+        cache: 'pip'
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -e.
         pip install setuptools wheel twine
-    - name: Build and publish
-      env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+    - name: Set version
       run: |
         echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+        echo "${{ env.VERSION }}"
         sed -i "s/version=.*/version=\"${{ env.VERSION }}\",/" setup.py
-        python setup.py bdist_wheel sdist
-        twine upload dist/*
-    - name: Publish package
-      run: |
-        twine upload dist/*
+    # - name: Build and publish
+    #   env:
+    #     TWINE_USERNAME: __token__
+    #     TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+    #   run: |
+    #     python setup.py bdist_wheel sdist
+    #     twine upload dist/*
