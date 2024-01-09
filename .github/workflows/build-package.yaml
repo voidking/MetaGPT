@@ -26,6 +26,7 @@ jobs:
     - name: Set version
       run: |
         echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+        echo "${GITHUB_REF}"
         echo "${{ env.VERSION }}"
         sed -i "s/version=.*/version=\"${{ env.VERSION }}\",/" setup.py
     # - name: Build and publish
