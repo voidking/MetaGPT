@@ -20,16 +20,13 @@ jobs:
         pip install -r requirements.txt
         pip install -e.
         pip install setuptools wheel twine
-    - name: Extract version from tag
-      run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
-    - name: Update version in setup.py
-      run: |
-        sed -i "s/version=.*/version=\"${{ env.VERSION }}\",/" setup.py
     - name: Build and publish
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
       run: |
+        echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+        sed -i "s/version=.*/version=\"${{ env.VERSION }}\",/" setup.py
         python setup.py bdist_wheel sdist
         twine upload dist/*
     - name: Publish package
