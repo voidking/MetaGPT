@@ -8,7 +8,6 @@ from metagpt.const import DATA_PATH, EXAMPLE_DATA_PATH
 from metagpt.logs import logger
 from metagpt.rag.engines import SimpleEngine
 from metagpt.rag.schema import (
-    BM25RetrieverConfig,
     ChromaIndexConfig,
     ChromaRetrieverConfig,
     ElasticsearchIndexConfig,
@@ -19,13 +18,13 @@ from metagpt.rag.schema import (
 )
 from metagpt.utils.exceptions import handle_exception
 
+LLM_TIP = "If you not sure, just answer I don't know."
+
 DOC_PATH = EXAMPLE_DATA_PATH / "rag/writer.txt"
-QUESTION = "What are key qualities to be a good writer?"
+QUESTION = f"What are key qualities to be a good writer? {LLM_TIP}"
 
 TRAVEL_DOC_PATH = EXAMPLE_DATA_PATH / "rag/travel.txt"
-TRAVEL_QUESTION = "What does Bob like?"
-
-LLM_TIP = "If you not sure, just answer I don't know."
+TRAVEL_QUESTION = f"What does Bob like? {LLM_TIP}"
 
 
 class Player(BaseModel):
@@ -43,16 +42,19 @@ class Player(BaseModel):
 class RAGExample:
     """Show how to use RAG."""
 
-    def __init__(self, engine: SimpleEngine = None):
+    def __init__(self, engine: SimpleEngine = None, use_llm_ranker: bool = True):
         self._engine = engine
+        self._use_llm_ranker = use_llm_ranker
 
     @property
     def engine(self):
         if not self._engine:
+            ranker_configs = [LLMRankerConfig()] if self._use_llm_ranker else None
+
             self._engine = SimpleEngine.from_docs(
                 input_files=[DOC_PATH],
-                retriever_configs=[FAISSRetrieverConfig(), BM25RetrieverConfig()],
-                ranker_configs=[LLMRankerConfig()],
+                retriever_configs=[FAISSRetrieverConfig()],
+                ranker_configs=ranker_configs,
             )
         return self._engine
 
@@ -60,8 +62,9 @@ class RAGExample:
     def engine(self, value: SimpleEngine):
         self._engine = value
 
+    @handle_exception
     async def run_pipeline(self, question=QUESTION, print_title=True):
-        """This example run rag pipeline, use faiss&bm25 retriever and llm ranker, will print something like:
+        """This example run rag pipeline, use faiss retriever and llm ranker, will print something like:
 
         Retrieve Result:
         0. Productivi..., 10.0
@@ -80,6 +83,7 @@ class RAGExample:
         answer = await self.engine.aquery(question)
         self._print_query_result(answer)
 
+    @handle_exception
     async def add_docs(self):
         """This example show how to add docs.
 
@@ -101,7 +105,7 @@ class RAGExample:
         """
         self._print_title("Add Docs")
 
-        travel_question = f"{TRAVEL_QUESTION}{LLM_TIP}"
+        travel_question = f"{TRAVEL_QUESTION}"
         travel_filepath = TRAVEL_DOC_PATH
 
         logger.info("[Before add docs]")
@@ -149,6 +153,7 @@ class RAGExample:
         except Exception as e:
             logger.error(f"nodes is empty, llm don't answer correctly, exception: {e}")
 
+    @handle_exception
     async def init_objects(self):
         """This example show how to from objs, will print something like:
 
@@ -161,6 +166,7 @@ class RAGExample:
         await self.add_objects(print_title=False)
         self.engine = pre_engine
 
+    @handle_exception
     async def init_and_query_chromadb(self):
         """This example show how to use chromadb. how to save and load index. will print something like:
 
@@ -234,8 +240,14 @@ class RAGExample:
 
 
 async def main():
-    """RAG pipeline"""
-    e = RAGExample()
+    """RAG pipeline.
+
+    Note:
+    1. If `use_llm_ranker` is True, then it will use LLM Reranker to get better result, but it is not always guaranteed that the output will be parseable for reranking,
+       prefer `gpt-4-turbo`, otherwise might encounter `IndexError: list index out of range` or `ValueError: invalid literal for int() with base 10`.
+    """
+    e = RAGExample(use_llm_ranker=False)
+
     await e.run_pipeline()
     await e.add_docs()
     await e.add_objects()

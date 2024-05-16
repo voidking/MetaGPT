@@ -26,6 +26,8 @@
 </p>
 
 ## News
+🚀 Mar. 29, 2024: [v0.8.0](https://github.com/geekan/MetaGPT/releases/tag/v0.8.0) released. Now you can use Data Interpreter via pypi package import. Meanwhile, we integrated RAG module and supported multiple new LLMs.
+
 🚀 Mar. 14, 2024: Our **Data Interpreter** paper is on [arxiv](https://arxiv.org/abs/2402.18679). Check the [example](https://docs.deepwisdom.ai/main/en/DataInterpreter/) and [code](https://github.com/geekan/MetaGPT/tree/main/examples/di)!
 
 🚀 Feb. 08, 2024: [v0.7.0](https://github.com/geekan/MetaGPT/releases/tag/v0.7.0) released, supporting assigning different LLMs to different Roles. We also introduced [Data Interpreter](https://github.com/geekan/MetaGPT/blob/main/examples/di/README.md), a powerful agent capable of solving a wide range of real-world problems.
@@ -83,8 +85,8 @@ You can configure `~/.metagpt/config2.yaml` according to the [example](https://g
 
 ```yaml
 llm:
-  api_type: "openai"  # or azure / ollama / open_llm etc. Check LLMType for more options
-  model: "gpt-4-turbo-preview"  # or gpt-3.5-turbo-1106 / gpt-4-1106-preview
+  api_type: "openai"  # or azure / ollama / groq etc. Check LLMType for more options
+  model: "gpt-4-turbo"  # or gpt-3.5-turbo
   base_url: "https://api.openai.com/v1"  # or forward url / other llm url
   api_key: "YOUR_API_KEY"
 ```
@@ -105,7 +107,7 @@ repo: ProjectRepo = generate_repo("Create a 2048 game")  # or ProjectRepo("<path
 print(repo)  # it will print the repo structure with files
 ```
 
-You can also use its [Data Interpreter](https://github.com/geekan/MetaGPT/tree/main/examples/di)
+You can also use [Data Interpreter](https://github.com/geekan/MetaGPT/tree/main/examples/di) to write code:
 
 ```python
 import asyncio
@@ -145,10 +147,13 @@ https://github.com/geekan/MetaGPT/assets/34952977/34345016-5d13-489d-b9f9-b82ace
 
 ## Support
 
-### Discard Join US
-📢 Join Our [Discord Channel](https://discord.gg/ZRHeExS6xv)!
+### Discord Join US
 
-Looking forward to seeing you there! 🎉
+📢 Join Our [Discord Channel](https://discord.gg/ZRHeExS6xv)! Looking forward to seeing you there! 🎉
+
+### Contributor form
+
+📝 [Fill out the form](https://airtable.com/appInfdG0eJ9J4NNL/pagK3Fh1sGclBvVkV/form) to become a contributor. We are looking forward to your participation!
 
 ### Contact Information
 
@@ -184,4 +189,6 @@ To cite [MetaGPT](https://arxiv.org/abs/2308.00352) or [Data Interpreter](https:
 }
 
 ```
+
+
 
