@@ -49,7 +49,9 @@ METAGPT_ROOT = get_metagpt_root()  # Dependent on METAGPT_PROJECT_ROOT
 DEFAULT_WORKSPACE_ROOT = METAGPT_ROOT / "workspace"
 
 EXAMPLE_PATH = METAGPT_ROOT / "examples"
+EXAMPLE_DATA_PATH = EXAMPLE_PATH / "data"
 DATA_PATH = METAGPT_ROOT / "data"
+EXAMPLE_BENCHMARK_PATH = EXAMPLE_PATH / "data/rag_bm"
 TEST_DATA_PATH = METAGPT_ROOT / "tests/data"
 RESEARCH_PATH = DATA_PATH / "research"
 TUTORIAL_PATH = DATA_PATH / "tutorial_docx"
@@ -67,6 +69,8 @@ TMP = METAGPT_ROOT / "tmp"
 SOURCE_ROOT = METAGPT_ROOT / "metagpt"
 PROMPT_PATH = SOURCE_ROOT / "prompts"
 SKILL_DIRECTORY = SOURCE_ROOT / "skills"
+TOOL_SCHEMA_PATH = METAGPT_ROOT / "metagpt/tools/schemas"
+TOOL_LIBS_PATH = METAGPT_ROOT / "metagpt/tools/libs"
 
 # REAL CONSTS
 
@@ -82,7 +86,6 @@ MESSAGE_ROUTE_TO_NONE = "<none>"
 REQUIREMENT_FILENAME = "requirement.txt"
 BUGFIX_FILENAME = "bugfix.txt"
 PACKAGE_REQUIREMENTS_FILENAME = "requirements.txt"
-CODE_PLAN_AND_CHANGE_FILENAME = "code_plan_and_change.json"
 
 DOCS_FILE_REPO = "docs"
 PRDS_FILE_REPO = "docs/prd"
@@ -103,6 +106,7 @@ CODE_SUMMARIES_PDF_FILE_REPO = "resources/code_summary"
 RESOURCES_FILE_REPO = "resources"
 SD_OUTPUT_FILE_REPO = "resources/sd_output"
 GRAPH_REPO_FILE_REPO = "docs/graph_repo"
+VISUAL_GRAPH_REPO_FILE_REPO = "resources/graph_db"
 CLASS_VIEW_FILE_REPO = "docs/class_view"
 
 YAPI_URL = "http://yapi.deepwisdomai.com/"
@@ -120,7 +124,6 @@ BASE64_FORMAT = "base64"
 
 # REDIS
 REDIS_KEY = "REDIS_KEY"
-LLM_API_TIMEOUT = 300
 
 # Message id
 IGNORED_MESSAGE_ID = "0"
@@ -129,3 +132,7 @@ IGNORED_MESSAGE_ID = "0"
 GENERALIZATION = "Generalize"
 COMPOSITION = "Composite"
 AGGREGATION = "Aggregate"
+
+# Timeout
+USE_CONFIG_TIMEOUT = 0  # Using llm.timeout configuration.
+LLM_API_TIMEOUT = 300
